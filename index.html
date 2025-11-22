@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nexus Clinical</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        fontFamily: {
+          sans: ['"Inter"', 'sans-serif'],
+        },
+        extend: {
+          colors: {
+            slate: {
+              850: '#172033',
+              900: '#0f172a',
+              950: '#020617',
+            }
+          },
+          backgroundImage: {
+            'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')",
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            'slide-up': 'slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            'slide-up-fade': 'slideUpFade 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+            'pop': 'pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            'elastic': 'elastic 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            'shimmer': 'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(10px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            slideUpFade: {
+              '0%': { transform: 'translateY(20px) scale(0.98)', opacity: '0', filter: 'blur(2px)' },
+              '100%': { transform: 'translateY(0) scale(1)', opacity: '1', filter: 'blur(0)' },
+            },
+            pop: {
+              '0%': { transform: 'scale(0.95)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+            elastic: {
+              '0%': { transform: 'scale(1)' },
+              '40%': { transform: 'scale(1.08)' },
+              '100%': { transform: 'scale(1)' },
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(100%)' }
+            }
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    :root {
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+    }
+
+    /* Premium Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent; 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1; 
+      border-radius: 10px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155; 
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8; 
+    }
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: #475569; 
+    }
+    
+    body {
+      background-color: #f8fafc; 
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      /* Smoother background transitions */
+      transition: background-color 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      overflow-x: hidden;
+    }
+
+    .dark body {
+      background-color: #020617;
+      color: #f8fafc;
+    }
+    
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Spotlight Effect Utilities */
+    .spotlight-card {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.4); /* Fallback */
+    }
+    
+    .dark .spotlight-card {
+      background-color: rgba(15, 23, 42, 0.2); /* Fallback */
+    }
+
+    /* The magic hover glow inside the card - Softer and larger */
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        1200px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.15),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .dark .spotlight-card::before {
+      background: radial-gradient(
+        1200px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.03),
+        transparent 60%
+      );
+    }
+
+    /* The magic border glow - slightly more distinct */
+    .spotlight-card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: radial-gradient(
+        1000px circle at var(--mouse-x) var(--mouse-y),
+        rgba(99, 102, 241, 0.25),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: -1;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
+    }
+
+    /* Active/Hover states for spotlight */
+    .spotlight-group:hover .spotlight-card::before,
+    .spotlight-group:hover .spotlight-card::after {
+      opacity: 1;
+    }
+
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

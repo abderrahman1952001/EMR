@@ -1,0 +1,5 @@
+{
+  "name": "Clinical EMR",
+  "description": "A high-fidelity, context-aware clinical documentation interface offering specialized modes for Adult, Pediatric, and OB/Gyn encounters with a modern, dark-themed aesthetic.",
+  "requestFramePermissions": []
+}
